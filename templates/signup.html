@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="/submit" method="POST">
+<form action="submit" method="POST" name="signup-form">
     <label for="username">Create your Username: </label>
     <input type="text" name="username" id="user"> <br>
     <label for="email">Enter your Thapar Email Id: </label>
@@ -10,6 +10,7 @@
     <input type="password" name="password" id="pass"> <br>
     <label for="remember-me">Remember Me?</label> 
     <input type="checkbox" name="remember-me" id="remember"> <br>
+    <p class="error error--hidden"></p>
     <button type="Submit">Sign Up!</button>
 </form>
 
