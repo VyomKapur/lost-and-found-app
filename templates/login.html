@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/submit" method="POST">
+    <label for="username">Enter your Username: </label>
+    <input type="text" name="username" id="user"> <br>
+    <label for="username">Enter your Password: </label>
+    <input type="password" name="password" id="pass"> <br>
+    <label for="remember-me">Remember Me?</label> 
+    <input type="checkbox" name="remember-me" id="remember"> <br>
+    <button type="Submit">Log In</button>
+</form>
+
+{% endblock %}
