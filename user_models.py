@@ -48,3 +48,8 @@ class User:
     def signout(self):
         session.clear()
         return redirect('/')
+    
+    def me(self):
+        items_lost = self.db.lost.find({'created_by': session['user']['_id']})
+        items_found = self.db.found.find({'created_by': session['user']['_id']})
+        return items_lost, items_found

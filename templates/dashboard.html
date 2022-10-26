@@ -3,6 +3,22 @@
 {% block title %} Dashboard {% endblock %}
 
 {% block content %} <h1>Welcome {{ session['user']['name'] }}!</h1>
-
-
+{% for item in items_lost: %}
+<div class="card" style="width: 18rem;">
+<img src="" class="card-img-top" alt="...">
+<div class="card-body">
+    <h5 class="card-title">{{ item['name'] }}</h5>
+    <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+</div>
+</div>
+{% endfor %}
+{% for item in items_found: %}
+<div class="card" style="width: 18rem;">
+<img src="" class="card-img-top" alt="...">
+<div class="card-body">
+    <h5 class="card-title">{{ item['name'] }}</h5>
+    <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+</div>
+</div>
+{% endfor %}
 {% endblock %}

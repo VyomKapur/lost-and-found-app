@@ -52,10 +52,9 @@ def contact():
 
 @app.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
-    user = {}
-    if request.method == "POST":
-        user = session['user']
-    return render_template('dashboard.html', user=user)
+    user = session['user']
+    items_lost, items_found = User(db).me()
+    return render_template('dashboard.html', user=user, items_lost=items_lost, items_found=items_found)
 
 @app.route('/signout', methods=['GET', 'POST'])
 def signout():
@@ -71,7 +70,10 @@ def create_found():
 
 @app.route('/submit/lost', methods=['GET', 'POST'])
 def submit_lost():
-    Item(db).create_lost()
+    res = Item(db).create_lost()
+    if res == False:
+        #error  
+        pass
     return redirect('/view/lost')
 
 @app.route('/submit/found', methods=['GET', 'POST'])

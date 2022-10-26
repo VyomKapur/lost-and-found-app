@@ -6,17 +6,20 @@ import gridfs
 class Item:
     def __init__(self, db):
         self.db = db
-
+        self.fs = gridfs.GridFS(self.db)
+    
     def create_lost(self):
         item_image = request.files['image-lost']
-        fs = gridfs.GridFS(self.db)
-        fs.put(item_image, filename="file")
+        id = uuid.uuid4().hex
+        self.fs.put(item_image, filename="lost"+str(id))
         item = { 
-            "_id": uuid.uuid4().hex,
+            "_id": id,
             "name": request.form.get('item-name'),
             "description": request.form.get('description-lost'),
             "location": request.form.get('location-lost'),
-            "image": item_image.filename
+            "resolved": False,
+            "image": item_image.filename,
+            "created_by": session['user']['_id']
         }        
         if self.db.lost.insert_one(item):
             return True
@@ -24,27 +27,31 @@ class Item:
         return False
     
     def view_lost(self):
-        items = self.db.lost.find({})
+        items = self.db.lost.find({'resolved':False})
         
         return items
     
     def create_found(self):
         item_image = request.files['image-found']
-        fs = gridfs.GridFS(self.db)
-        fs.put(item_image, filename="file")
+        id = uuid.uuid4().hex
+        self.fs.put(item_image, filename="found"+str(id))
         item = { 
-            "_id": uuid.uuid4().hex,
+            "_id": id,
             "name": request.form.get('item-name'),
             "description": request.form.get('description-found'),
             "location": request.form.get('location-found'),
-            "image": item_image.filename
+            "resolved": False,
+            "image": item_image.filename,
+            "created_by": session['user']['_id']
         }        
         if self.db.found.insert_one(item):
             return True
-        
         return False
     
     def view_found(self):
-        items = self.db.found.find({})
-        
+        items = self.db.found.find({'resolved':False})
+        # for item in items:
+        #     file = self.fs.find_one({'filename': 'found'+str(item['_id'])})
+        #     image = file.read()
+        #     item['image'] = image
         return items
