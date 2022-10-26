@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Item Found {% endblock %}
+{% block content %}
+<form action="/submit/found" method="POST" enctype="multipart/form-data">
+    <label for="item-found">Enter name of item found</label>
+    <input type="text" name="item-name"> <br>
+    <label for="description-found">Enter description of item found</label>
+    <textarea name="description-found" cols="30" rows="10"></textarea><br>
+    <label for="location-found">Enter location of item found</label>
+    <input type="text" name="location"> <br>
+    <label for="image-found">Upload picture</label>
+    <input type="file" name="image-found"> <br>
+    <button>Submit Found Request</button>
+</form>
+
+{% endblock %}

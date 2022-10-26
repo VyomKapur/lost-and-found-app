@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Item Lost {% endblock %}
+{% block content %}
+<form action="/submit/lost" method="POST" enctype="multipart/form-data">
+    <label for="item-lost">Enter name of item lost</label>
+    <input type="text" name="item-name"> <br>
+    <label for="description-lost">Enter description of item lost</label>
+    <textarea name="description-lost" cols="30" rows="10"></textarea><br>
+    <label for="location-lost">Enter last known location lost</label>
+    <input type="text" name="location-lost"> <br>
+    <label for="image-lost">Upload picture</label>
+    <input type="file" name="image-lost"> <br>
+    <button>Submit Lost Request</button>
+</form>
+
+{% endblock %}

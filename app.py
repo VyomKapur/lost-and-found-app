@@ -1,15 +1,24 @@
 from flask import Flask,  render_template, request, redirect, session
-from requests import session
-from models import User
+from flask_pymongo import PyMongo
+from functools import wraps
+from user_models import User
+from item_models import Item
 import pymongo
-
-session = {}
 
 app = Flask(__name__)
 app.secret_key = b'\xb6\xc4D\x95\xe5\xc6\xba\x06\xbc\x9a\x8at\xb5j\x89\x18'
 
-client = pymongo.MongoClient("mongodb+srv://vyom:qwerty123@user.dgrxeu0.mongodb.net/?retryWrites=true&w=majority")
-db = client.user_login_system
+client = pymongo.MongoClient("mongodb+srv://vyom:qwerty123@user.dgrxeu0.mongodb.net/?retryWrites=true&w=majority", connect=False)
+db = client.user_login_system  
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if "logged_in" in session:
+            return f(*args, **kwargs)
+        else:
+            return redirect('/')
+    return wrap
 
 @app.route('/')
 def homepage():
@@ -19,10 +28,15 @@ def homepage():
 def login():
     return render_template('login.html')
 
-@app.route('/submit', methods=['GET', 'POST'])
+@app.route('/submit/signup', methods=['GET', 'POST'])
 def signed():
-    session['user'] = User(db).signup()
-    return redirect('dashboard')
+    User(db).signup()
+    return redirect('/dashboard')
+
+@app.route('/submit/login', methods=['GET', 'POST'])
+def logged():
+    User(db).login()
+    return redirect('/dashboard')
 
 @app.route('/signup')
 def signup():
@@ -43,5 +57,37 @@ def dashboard():
         user = session['user']
     return render_template('dashboard.html', user=user)
 
-if __name__ == "__main__":
+@app.route('/signout', methods=['GET', 'POST'])
+def signout():
+    return User(db).signout()
+
+@app.route('/create/lost', methods=['GET', 'POST'])
+def create_lost():
+    return render_template('create-lost.html')
+
+@app.route('/create/found', methods=['GET', 'POST'])
+def create_found():
+    return render_template('create-found.html')
+
+@app.route('/submit/lost', methods=['GET', 'POST'])
+def submit_lost():
+    Item(db).create_lost()
+    return redirect('/view/lost')
+
+@app.route('/submit/found', methods=['GET', 'POST'])
+def submit_found():
+    Item(db).create_found()
+    return redirect('/view/found')
+
+@app.route('/view/lost', methods=['GET', 'POST'])
+def view_lost():
+    items = Item(db).view_lost()
+    return render_template('view-lost.html', items=items)
+
+@app.route('/view/found', methods=['GET', 'POST'])
+def view_found():
+    items = Item(db).view_found()
+    return render_template('view-found.html', items=items)
+
+if __name__ == "__main__": 
     app.run(debug=True)
