@@ -3,6 +3,9 @@
 {% block title %} Dashboard {% endblock %}
 
 {% block content %} <h1>Welcome {{ session['user']['name'] }}!</h1>
+{% if items_lost|length == 0: %}
+<h4>No lost items requests posted</h4>
+{% else: %}
 {% for item in items_lost: %}
 <div class="card" style="width: 18rem;">
 <img src="" class="card-img-top" alt="...">
@@ -12,6 +15,10 @@
 </div>
 </div>
 {% endfor %}
+{% endif %}
+{% if items_found|length == 0: %}
+<h4>No found items requests posted</h4>
+{% else: %}
 {% for item in items_found: %}
 <div class="card" style="width: 18rem;">
 <img src="" class="card-img-top" alt="...">
@@ -21,4 +28,5 @@
 </div>
 </div>
 {% endfor %}
+{% endif %}
 {% endblock %}

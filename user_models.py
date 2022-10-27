@@ -22,7 +22,7 @@ class User:
         if user and pbkdf2_sha256.verify(pass_key, user['password']):
             return self.start_session(user)
         
-        return redirect('/')
+        return {"error": "Invalid username or password"}
     
     def signup(self):
         user = { 
@@ -31,19 +31,19 @@ class User:
             "email": request.form.get('email'),
             "password": request.form.get('password')
         }
-        
+        print(user)
         user['password'] = pbkdf2_sha256.encrypt(user['password'])
         
         if self.db.users.find_one({"email": user['email']}):
-            return jsonify({"error": "Email already in use"}), 400
+            return {"error": "Email already in use"}
 
         if self.db.users.find_one({"name": user['name']}):
-            return jsonify({"error": "Username already in use"}), 400
+            return {"error": "Username already in use"}
         
         if self.db.users.insert_one(user):
             return self.start_session(user)
         
-        return jsonify({"error": "Error signing up"}), 400
+        return {"error": "Error signing up"}
     
     def signout(self):
         session.clear()

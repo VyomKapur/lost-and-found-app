@@ -1,17 +1,43 @@
 {% extends "base.html" %}
 
+{% block link %}
+<script src="/static/js/script.js"></script>{% endblock %}
 {% block content %}
-<form action="submit/signup" method="POST" name="signup-form">
+<form action="submit/signup" method="POST" id="signup-form" onsubmit = "return(validate());">
     <label for="username">Create your Username: </label>
     <input type="text" name="username" id="user"> <br>
     <label for="email">Enter your Thapar Email Id: </label>
     <input type="text" name="email" id="email"> <br>
-    <label for="username">Create your Password: </label>
+    <label for="password">Create your Password: </label>
     <input type="password" name="password" id="pass"> <br>
     <label for="remember-me">Remember Me?</label> 
     <input type="checkbox" name="remember-me" id="remember"> <br>
-    <p class="error error--hidden"></p>
+    <p id="error"></p>
     <button type="Submit">Sign Up!</button>
 </form>
 
+<script>
+    p = document.getElementById('error')
+    p.innerHTML = ""
+    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    function validate() {
+        if(document.getElementById('user').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if(document.getElementById('email').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if(document.getElementById('pass').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if (!document.getElementById('email').value.match(validRegex)) {
+            p.innerHTML = "Enter a valid email id"
+            return false;
+        }
+        return( true );
+}
+</script>
 {% endblock %}

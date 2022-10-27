@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = b'\xb6\xc4D\x95\xe5\xc6\xba\x06\xbc\x9a\x8at\xb5j\x89\x18'
 
 client = pymongo.MongoClient("mongodb+srv://vyom:qwerty123@user.dgrxeu0.mongodb.net/?retryWrites=true&w=majority", connect=False)
-db = client.user_login_system  
+db = client.lost_and_found  
 
 def login_required(f):
     @wraps(f)
@@ -24,18 +24,28 @@ def login_required(f):
 def homepage():
     return render_template('homepage.html')
 
+@app.route('/error')
+def error():
+    return render_template('error.html', error = session['error'])
+
 @app.route('/login')
 def login():
     return render_template('login.html')
 
 @app.route('/submit/signup', methods=['GET', 'POST'])
 def signed():
-    User(db).signup()
+    res = User(db).signup()
+    if 'user' not in session:
+        session['error'] = res['error']
+        return redirect('/error')
     return redirect('/dashboard')
 
 @app.route('/submit/login', methods=['GET', 'POST'])
 def logged():
-    User(db).login()
+    res = User(db).login()
+    if 'user' not in session:
+        session['error'] = res['error']
+        return redirect('/error')
     return redirect('/dashboard')
 
 @app.route('/signup')
@@ -54,7 +64,7 @@ def contact():
 def dashboard():
     user = session['user']
     items_lost, items_found = User(db).me()
-    return render_template('dashboard.html', user=user, items_lost=items_lost, items_found=items_found)
+    return render_template('dashboard.html', user=user, items_lost=list(items_lost), items_found=list(items_found))
 
 @app.route('/signout', methods=['GET', 'POST'])
 def signout():
@@ -84,12 +94,12 @@ def submit_found():
 @app.route('/view/lost', methods=['GET', 'POST'])
 def view_lost():
     items = Item(db).view_lost()
-    return render_template('view-lost.html', items=items)
+    return render_template('view-lost.html', items=list(items))
 
 @app.route('/view/found', methods=['GET', 'POST'])
 def view_found():
     items = Item(db).view_found()
-    return render_template('view-found.html', items=items)
+    return render_template('view-found.html', items=list(items))
 
 if __name__ == "__main__": 
     app.run(debug=True)

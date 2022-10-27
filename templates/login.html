@@ -1,14 +1,38 @@
 {% extends "base.html" %}
-
+{% block link %}
+<script src="/static/js/script.js"></script>
+{% endblock %}
 {% block content %}
-<form action="/submit/login" method="POST" name="login-form">
+<form action="/submit/login" method="POST" name="login-form" onsubmit = "return(validate());">
     <label for="username">Enter your Username: </label>
     <input type="text" name="username" id="user"> <br>
     <label for="username">Enter your Password: </label>
     <input type="password" name="password" id="pass"> <br>
     <label for="remember-me">Remember Me?</label> 
     <input type="checkbox" name="remember-me" id="remember"> <br>
+    <p id="error"></p>
     <button type="Submit">Log In</button>
 </form>
-
+<script>
+    p = document.getElementById('error')
+    p.innerHTML = ""
+    document.addEventListener('keyup', (e) => {
+        if (e.getModifierState('CapsLock')) {
+            p.innerHTML = "Caps lock is on";
+        } else {
+            cosole.log("Caps Lock is off");
+        }
+    });
+    function validate() {
+        if(document.getElementById('user').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if(document.getElementById('pass').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        return( true );
+}
+</script>
 {% endblock %}

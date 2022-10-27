@@ -2,7 +2,11 @@
 
 {% block title %} View Found Items {% endblock %}
 
-{% block content %} {% for item in items: %}
+{% block content %}
+{% if items|length == 0: %}
+<h4>No found items request yet</h4>
+{% else: %}
+{% for item in items: %}
 {% if 'name' in item %}
 <div class="card" style="width: 18rem;">
 <img src="" class="card-img-top" alt="...">
@@ -14,4 +18,5 @@
 </div>
 {% endif %}
 {% endfor %}
+{% endif %}
 {% endblock %}
