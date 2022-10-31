@@ -3,16 +3,21 @@
 <script src="/static/js/script.js"></script>
 {% endblock %}
 {% block content %}
-<form action="/submit/login" method="POST" name="login-form" onsubmit = "return(validate());">
-    <label for="username">Enter your Username: </label>
-    <input type="text" name="username" id="user"> <br>
-    <label for="username">Enter your Password: </label>
-    <input type="password" name="password" id="pass"> <br>
-    <label for="remember-me">Remember Me?</label> 
-    <input type="checkbox" name="remember-me" id="remember"> <br>
-    <p id="error"></p>
-    <button type="Submit">Log In</button>
-</form>
+<div class="container">
+    <form action="/submit/login" method="POST" name="login-form" onsubmit = "return(validate());">
+    <div class="row center align-items-center margin-2">
+            <label for="username">Enter your Username: </label>
+            <input type="text" name="username" id="user"> <br>
+            <label for="email">Enter your Email: </label>
+            <input type="text" name="email" id="email"> <br>
+            <label for="username">Enter your Password: </label>
+            <input type="password" name="password" id="pass"> <br>
+            <p id="error"></p>
+            <button type="Submit">Log In</button>
+    </div>
+    </form>
+</div>
+
 <script>
     p = document.getElementById('error')
     p.innerHTML = ""
@@ -25,6 +30,10 @@
     });
     function validate() {
         if(document.getElementById('user').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if(document.getElementById('email').value == "" ) {
             p.innerHTML = "Fields must not be blank"
             return false;
         }

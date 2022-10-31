@@ -50,8 +50,9 @@ class Item:
     
     def view_found(self):
         items = self.db.found.find({'resolved':False})
+        # images = []
         # for item in items:
         #     file = self.fs.find_one({'filename': 'found'+str(item['_id'])})
         #     image = file.read()
-        #     item['image'] = image
+        #     images.append(image)
         return items

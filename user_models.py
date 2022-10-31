@@ -14,7 +14,8 @@ class User:
         self.db = db
     def login(self):
         user = self.db.users.find_one({
-            "name": request.form.get('username')
+            "name": request.form.get('username'),
+            "email": request.form.get('email')
         })
         
         pass_key = request.form.get('password')
@@ -29,7 +30,8 @@ class User:
             "_id": uuid.uuid4().hex,
             "name": request.form.get('username'),
             "email": request.form.get('email'),
-            "password": request.form.get('password')
+            "password": request.form.get('password'),
+            "is_admin": "False"
         }
         print(user)
         user['password'] = pbkdf2_sha256.encrypt(user['password'])

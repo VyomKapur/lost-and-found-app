@@ -20,6 +20,7 @@ def login_required(f):
             return redirect('/')
     return wrap
 
+
 @app.route('/')
 def homepage():
     return render_template('homepage.html')
@@ -100,6 +101,38 @@ def view_lost():
 def view_found():
     items = Item(db).view_found()
     return render_template('view-found.html', items=list(items))
+
+@app.route('/admin')
+def admin_view():
+    if session['user']['is_admin'] == "False":
+        return redirect('/')
+    users = db.users.find({'is_admin': 'False'})
+    items_lost = db.lost.find({})
+    items_found = db.found.find({})
+    return render_template('admin-view.html', users=users, items_lost=items_lost, items_found=items_found)
+
+@app.route('/admin/user/delete/<string:id>', methods=['GET', 'POST'])
+def delete_user(id):
+    if session['user']['is_admin'] == "False":
+        return redirect('/')
+    db.users.delete_one({'_id':id})
+    db.found.delete_many({'created_by': id})
+    db.lost.delete_many({'created_by': id})
+    return redirect('/admin')
+
+@app.route('/admin/lost/delete/<string:id>', methods=['GET', 'POST'])
+def delete_lost(id):
+    if session['user']['is_admin'] == "False":
+        return redirect('/')
+    db.lost.delete_one({'_id':id})
+    return redirect('/admin')
+
+@app.route('/admin/found/delete/<string:id>', methods=['GET', 'POST'])
+def delete_found(id):
+    if session['user']['is_admin'] == "False":
+        return redirect('/')
+    db.found.delete_one({'_id':id})
+    return redirect('/admin')
 
 if __name__ == "__main__": 
     app.run(debug=True)
