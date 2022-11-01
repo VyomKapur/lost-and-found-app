@@ -1,26 +1,65 @@
 <!DOCTYPE html>    
+{% extends "base.html" %}
+{% block link %}
+<script src="/static/js/script.js"></script>
+{% endblock %}
+{% block content %}
 <html>    
 <head>    
     <title>Login</title>    
-    <link rel="stylesheet" type="text/css" href="css/style.css">    
-</head>    
+    <link rel="stylesheet" href="style.css">    
+</head>
 <body>    
+    
     <h1>Enter your Login details</h1><br>    
-    <div class="login">    
-    <form id="login" method="get">    
-        <label><b>User Name</b></label>    
-        <input type="text" name="Uname" id="Uname" placeholder="Enter your username">    
+    <div class="container">  
+    <form action="/submit/login" method="POST" name="login-form" onsubmit = "return(validate());">
+    <div class="row center align-items-center margin-2">
+    
+        <label for="username">Enter Username: </label><br>    
+        <input type="text" name="username" id="user">    
         <br><br>    
-        <label><b>Password</b></label>    
-        <input type="Password" name="Pass" id="Pass" placeholder="Enter your password">    
-        <br><br>    
-        <button  >Log In</button>   
-        <br><br>    
-        <input type="checkbox" id="check">    
-        <span>Remember me</span>    
-        <br><br>    
-        <a href="#">Forgot Password</a>    
+
+        <label for="email">Enter Email:  </label><br>
+        <input type="text" name="email" id="email"> 
+        <br><br>
+
+        <label for="password">Enter Password: </label><br>
+        <input type="text" id="pass">
+        <br><br><br>
+
+        <button type="Submit">Log In</button>   
+    </div>
+
     </form>     
-</div>    
+    </div>    
 </body>    
-</html>     
+</html> 
+
+<script>
+    p = document.getElementById('error')
+    p.innerHTML = ""
+    document.addEventListener('keyup', (e) => {
+        if (e.getModifierState('CapsLock')) {
+            p.innerHTML = "Caps lock is on";
+        } else {
+            cosole.log("Caps Lock is off");
+        }
+    });
+    function validate() {
+        if(document.getElementById('user').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if(document.getElementById('email').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if(document.getElementById('pass').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        return( true );
+}
+</script>
+{% endblock %}
