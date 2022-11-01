@@ -1,26 +1,59 @@
-<!DOCTYPE html>    
-<html>    
+{% extends "base.html" %}
+
+{% block link %}
+<script src="/static/js/script.js"></script>{% endblock %}
+{% block content %}
+
+<html>
 <head>    
-    <title>Signup-form</title>    
-    <link rel="stylesheet" type="text/css" href="css/style2.css">    
-</head>
+    <title>Sign up</title>
+    <link rel="stylesheet" href="style.css">    
+</head> 
 <body>
-    <h1>Sign Up here</h1><br>    
-    <div class="login">   
-    <form action="submit" method="POST" name="signup-form">
-        <label for="username">Create your Username: </label>
-        <input type="text" name="username" id="Uname" placeholder="Enter your username"> 
-        <br><br>
-        <label for="email">Enter your Thapar Email Id: </label>
-        <input type="text" name="email" id="Uname"placeholder="Enter your Email id"> 
-        <br><br>
-        <label for="username">Create your Password: </label>
-        <input type="password" name="password" id="Pass" placeholder="Enter your password">
-        <br><br>
-        <input type="checkbox" id="check">    
-        <span>Remember me</span>  
-        <br><br>
-        <button type="Submit">Sign Up</button>
-    </form>
-    </div>
+<h1>Enter your details</h1><br>    
+<div class="container">
+<form action="submit/signup" method="POST" id="signup-form" onsubmit = "return(validate());">
+    <div class="row center align-items-center margin-2">
+
+    <label for="username" >Create your Username: </label><br>
+    <input type="text" name="username" id="user"> <br><br>
+    <label for="email">Enter your Thapar Email Id: </label><br>
+    <input type="text" name="email" id="email"> <br><br>
+    <label for="password">Create your Password: </label><br>
+    <input type="password" name="password" id="pass"> <br><br>
+    <label for="remember-me" style="font-size: 14px">Remember Me?</label> 
+    <input type="checkbox" name="remember-me" id="remember"> 
+    <p id="error"></p>
+    <button type="Submit">Sign Up!</button>
+</div>
+
+</form>
+</div>
 </body>
+</html>
+
+<script>
+    p = document.getElementById('error')
+    p.innerHTML = ""
+    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    function validate() {
+        if(document.getElementById('user').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if(document.getElementById('email').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if(document.getElementById('pass').value == "" ) {
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        if (!document.getElementById('email').value.match(validRegex)) {
+            p.innerHTML = "Enter a valid email id"
+            return false;
+        }
+        return( true );
+    }
+</script>
+{% endblock %}
