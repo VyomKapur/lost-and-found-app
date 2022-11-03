@@ -1,0 +1,20 @@
+@import
+url('https://fonts.googleapis.com/css?family=Kalam:400,800');
+
+.navbar-brand{
+    font-family: 'Kalam';
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+    background-color: rgb(114, 110, 110);
+}
+
+.container-fluid{
+    background-color: #3c3c3e;
+    height:70px;
+}
+
+li{
+    padding: 0px 3px;
+    font-size:large;
+}

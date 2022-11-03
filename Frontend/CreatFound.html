@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>    
+{% extends "base.html" %}
+
+{% block title %} Item Found {% endblock %}
+{% block content %}
+<html>    
+<head>    
+    <title>Create Found</title>    
+    <link rel="stylesheet" href="cfa.css">    
+</head>
+<body>  
+    <h1>Enter the details of the found item:</h1> 
+    <div class="container">   
+    <form action="/submit/found" method="POST" enctype="multipart/form-data" onsubmit="return(validateForm());">
+        <div class="details"></div>
+        <label for="item-found">Enter name of item found</label>
+        <input type="text" name="item-name" id="name"> <br>
+        <label for="description-found">Enter description of item found</label>
+        <textarea name="description-found" cols="30" rows="10" id="desc"></textarea><br>
+        <label for="location-found">Enter location of item found</label>
+        <input type="text" name="location" id="location"> <br>
+        
+        <label for="image-found">Upload picture</label>
+        <input type="file" name="image-found" style="text-align-last: center"> <br>
+        <p id="error"></p>
+        <button>Submit Found Request</button>
+        </div>
+    </form>
+    </div>
+</body>    
+</html>
+
+<script>
+    p = document.getElementById('error')
+    p.innerHTML = ""
+    function validateForm(){
+        if (document.getElementById('name').value == "" || document.getElementById('desc').value == "" || document.getElementById('location').value == ""){
+            p.innerHTML = "Fields must not be blank"
+            return false;
+        }
+        return ( true );
+    }
+</script>
+{% endblock %}
