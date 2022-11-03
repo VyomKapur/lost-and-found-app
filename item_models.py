@@ -19,7 +19,8 @@ class Item:
             "location": request.form.get('location-lost'),
             "resolved": False,
             "image": item_image.filename,
-            "created_by": session['user']['_id']
+            "created_by": session['user']['_id'],
+            "claimed_by": []
         }        
         if self.db.lost.insert_one(item):
             return True
@@ -42,7 +43,8 @@ class Item:
             "location": request.form.get('location-found'),
             "resolved": False,
             "image": item_image.filename,
-            "created_by": session['user']['_id']
+            "created_by": session['user']['_id'],
+            "claimed_by": []
         }        
         if self.db.found.insert_one(item):
             return True

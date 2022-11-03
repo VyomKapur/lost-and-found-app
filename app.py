@@ -64,8 +64,23 @@ def contact():
 @app.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
     user = session['user']
-    items_lost, items_found = User(db).me()
-    return render_template('dashboard.html', user=user, items_lost=list(items_lost), items_found=list(items_found))
+    items_lost, items_found, items_lost_claimed, items_found_claimed = User(db).me()
+    items_lost_claimed = list(items_lost_claimed)
+    items_found_claimed = list(items_found_claimed)
+    users_lost = []
+    users_found = []
+    claimed_lost = []
+    claimed_found = []
+    for item in items_lost_claimed:
+        for id in item['claimed_by']:
+            users_lost = db.users.find({'_id': id})
+            claimed_lost.append((item,list(users_lost)))
+    for item in items_found_claimed:
+        for id in item['claimed_by']:
+            users_found = db.users.find({'_id': id})
+            claimed_found.append((item,list(users_found)))
+    
+    return render_template('dashboard.html', user=user, items_lost=list(items_lost), items_found=list(items_found), claimed_lost=claimed_lost, claimed_found=claimed_found)
 
 @app.route('/signout', methods=['GET', 'POST'])
 def signout():
@@ -97,10 +112,24 @@ def view_lost():
     items = Item(db).view_lost()
     return render_template('view-lost.html', items=list(items))
 
+@app.route('/view/lost/claim/<string:id>', methods=['GET', 'POST'])
+def claim_lost(id):
+    claimed_by = db.lost.find_one({"_id": id})['claimed_by']
+    claimed_by.append(session['user']['_id'])
+    db.lost.update_one({'_id': id}, {'$set': {'claimed_by': claimed_by}})
+    return redirect('/view/lost')
+
 @app.route('/view/found', methods=['GET', 'POST'])
 def view_found():
     items = Item(db).view_found()
     return render_template('view-found.html', items=list(items))
+
+@app.route('/view/found/claim/<string:id>', methods=['GET', 'POST'])
+def claim_found(id):
+    claimed_by = db.found.find_one({"_id": id})['claimed_by']
+    claimed_by.append(session['user']['_id'])
+    db.found.update_one({'_id': id}, {'$set': {'claimed_by': claimed_by}})
+    return redirect('/view/found')
 
 @app.route('/admin')
 def admin_view():

@@ -7,14 +7,25 @@
 <h4>No lost items request yet</h4>
 {% else: %}
 {% for item in items: %}
+{% if session['user']['_id'] not in item['claimed_by']: %}
 <div class="card" style="width: 18rem;">
 <img src="..." class="card-img-top" alt="...">
 <div class="card-body">
     <h5 class="card-title">{{ item['name'] }}</h5>
     <p class="card-text">{{ item['description'] }}</p>
-    <a href="#" class="btn btn-primary {{ 'disabled' if item['created_by'] == session['user']['_id'] }}">Claim</a>
+    <a href="/view/lost/claim/{{ item['_id'] }}" class="btn btn-primary {{ 'disabled' if item['created_by'] == session['user']['_id'] }}">Claim</a>
 </div>
 </div>
+{% else: %}
+<h3>Claimed Items: </h3>
+<div class="card" style="width: 18rem;">
+<img src="" class="card-img-top" alt="...">
+<div class="card-body">
+    <h5 class="card-title">{{ item['name'] }}</h5>
+    <p class="card-text">{{ item['description'] }}</p>
+</div>
+</div>
+{% endif %}
 {% endfor %}
 {% endif %}
 {% endblock %}

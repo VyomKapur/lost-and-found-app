@@ -8,14 +8,25 @@
 {% else: %}
 {% for item in items: %}
 {% if 'name' in item %}
+{% if session['user']['_id'] in item['claimed_by']: %}
+<h3>Claimed Items: </h3>
 <div class="card" style="width: 18rem;">
 <img src="" class="card-img-top" alt="...">
 <div class="card-body">
     <h5 class="card-title">{{ item['name'] }}</h5>
     <p class="card-text">{{ item['description'] }}</p>
-    <a href="#" class="btn btn-primary {{ 'disabled' if item['created_by'] == session['user']['_id'] }}">Claim</a>
 </div>
 </div>
+{% else: %}
+<div class="card" style="width: 18rem;">
+    <img src="" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{ item['name'] }}</h5>
+        <p class="card-text">{{ item['description'] }}</p>
+        <a href="/view/found/claim/{{ item['_id'] }}" class="btn btn-primary {{ 'disabled' if item['created_by'] == session['user']['_id'] }}">Claim</a>
+    </div>
+    </div>
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}

@@ -2,31 +2,89 @@
 
 {% block title %} Dashboard {% endblock %}
 
-{% block content %} <h1>Welcome {{ session['user']['name'] }}!</h1>
-{% if items_lost|length == 0: %}
-<h4>No lost items requests posted</h4>
-{% else: %}
-{% for item in items_lost: %}
-<div class="card" style="width: 18rem;">
-<img src="" class="card-img-top" alt="...">
-<div class="card-body">
-    <h5 class="card-title">{{ item['name'] }}</h5>
-    <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+{% block content %} 
+
+<h1 class="text-center m-3">Welcome {{ session['user']['name'] }}!</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center">Lost Requests</h3>
+            {% if items_lost|length == 0: %}
+            <h5 class="text-center">No lost items requests posted</h5>
+            {% else: %}
+            {% for item in items_lost: %}
+            <div class="card" style="width: 18rem;">
+            <img src="" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ item['name'] }}</h5>
+                <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+            </div>
+            </div>
+            {% endfor %}
+            {% endif %} 
+        </div>
+
+        <div class="col">
+            <h3 class="text-center">Found Requests</h3>
+            {% if items_found|length == 0: %}
+            <h5 class="text-center">No found items requests posted</h5>
+            {% else: %}
+            {% for item in items_found: %}
+            <div class="card" style="width: 18rem;">
+            <img src="" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ item['name'] }}</h5>
+                <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+            </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="col">
+            <h3 class="text-center">Lost Claims</h3>
+            {% if claimed_lost|length == 0: %}
+            <h5 class="text-center">No claims made for your lost items</h5>
+            {% else: %}
+            {% for claim in claimed_lost: %}
+                {% set item = claim[0] %}
+                {% set users = claim[1] %}
+            <div class="card" style="width: 18rem;">
+            <img src="" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ item['name'] }}</h5>
+                <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+                {% for user in users: %}
+                <p>Name: {{ user['name'] }}, Email: {{ user['email'] }}</p>
+                {% endfor %}
+            </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="col">
+            <h3 class="text-center">Found Claims</h3>
+            {% if claimed_found|length == 0: %}
+            <h5 class="text-center">No claims made for your found items</h5>
+            {% else: %}
+            {% for claim in claimed_found: %}
+                {% set item = claim[0] %}
+                {% set users = claim[1] %}
+            <div class="card" style="width: 18rem;">
+            <img src="" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ item['name'] }}</h5>
+                <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+                {% for user in users: %}
+                <p>Name: {{ user['name'] }}, Email: {{ user['email'] }}</p>
+                {% endfor %}
+            </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 </div>
-</div>
-{% endfor %}
-{% endif %}
-{% if items_found|length == 0: %}
-<h4>No found items requests posted</h4>
-{% else: %}
-{% for item in items_found: %}
-<div class="card" style="width: 18rem;">
-<img src="" class="card-img-top" alt="...">
-<div class="card-body">
-    <h5 class="card-title">{{ item['name'] }}</h5>
-    <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
-</div>
-</div>
-{% endfor %}
-{% endif %}
 {% endblock %}
