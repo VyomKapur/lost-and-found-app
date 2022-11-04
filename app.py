@@ -73,14 +73,34 @@ def dashboard():
     claimed_found = []
     for item in items_lost_claimed:
         for id in item['claimed_by']:
-            users_lost = db.users.find({'_id': id})
+            users_lost = db.users.find({'_id': id, "resolved": False})
             claimed_lost.append((item,list(users_lost)))
     for item in items_found_claimed:
         for id in item['claimed_by']:
-            users_found = db.users.find({'_id': id})
+            users_found = db.users.find({'_id': id, "resolved":False})
             claimed_found.append((item,list(users_found)))
     
     return render_template('dashboard.html', user=user, items_lost=list(items_lost), items_found=list(items_found), claimed_lost=claimed_lost, claimed_found=claimed_found)
+
+@app.route('/delete/lost/<string:id>', methods=['GET', 'POST'])
+def delete_lost_user(id):
+    db.lost.delete_one({'_id':id})
+    return redirect('/dashboard')
+
+@app.route('/delete/found/<string:id>', methods=['GET', 'POST'])
+def delete_found_user(id):
+    db.found.delete_one({'_id':id})
+    return redirect('/dashboard')
+
+@app.route('/resolve/lost/<string:id>', methods=['GET', 'POST'])
+def resolve_lost(id):
+    db.lost.update_one({'_id': id}, {'$set': {'resolved': True}})
+    return redirect('/dashboard')
+
+@app.route('/resolve/found/<string:id>', methods=['GET', 'POST'])
+def resolve_found(id):
+    db.found.update_one({'_id': id}, {'$set': {'resolved': True}})
+    return redirect('/dashboard')
 
 @app.route('/signout', methods=['GET', 'POST'])
 def signout():
@@ -114,7 +134,7 @@ def view_lost():
 
 @app.route('/view/lost/claim/<string:id>', methods=['GET', 'POST'])
 def claim_lost(id):
-    claimed_by = db.lost.find_one({"_id": id})['claimed_by']
+    claimed_by = db.lost.find_one({"_id": id, "resolved": False})['claimed_by']
     claimed_by.append(session['user']['_id'])
     db.lost.update_one({'_id': id}, {'$set': {'claimed_by': claimed_by}})
     return redirect('/view/lost')
@@ -126,7 +146,7 @@ def view_found():
 
 @app.route('/view/found/claim/<string:id>', methods=['GET', 'POST'])
 def claim_found(id):
-    claimed_by = db.found.find_one({"_id": id})['claimed_by']
+    claimed_by = db.found.find_one({"_id": id, "resolved": False})['claimed_by']
     claimed_by.append(session['user']['_id'])
     db.found.update_one({'_id': id}, {'$set': {'claimed_by': claimed_by}})
     return redirect('/view/found')

@@ -19,6 +19,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ item['name'] }}</h5>
                 <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+                <a href="/delete/lost/{{ item['_id'] }}" class="btn btn-primary">Delete</a>
             </div>
             </div>
             {% endfor %}
@@ -36,6 +37,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ item['name'] }}</h5>
                 <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+                <a href="/delete/found/{{ item['_id'] }}" class="btn btn-primary">Resolve</a>
             </div>
             </div>
             {% endfor %}
@@ -54,9 +56,15 @@
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ item['name'] }}</h5>
-                <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+                <p class="card-text">{{ item['description'] }}</p>
                 {% for user in users: %}
-                <p>Name: {{ user['name'] }}, Email: {{ user['email'] }}</p>
+                <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Name: {{ user['name'] }}</h5>
+                    <p>Contact: {{ user['email'] }}</p>
+                    <a href="/resolve/lost/{{ item['_id'] }}" class="btn btn-primary">Resolve</a>  
+                </div>     
+                </div>         
                 {% endfor %}
             </div>
             </div>
@@ -76,9 +84,17 @@
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ item['name'] }}</h5>
-                <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
+                <p class="card-text">{{ item['description'] }}</p>
                 {% for user in users: %}
-                <p>Name: {{ user['name'] }}, Email: {{ user['email'] }}</p>
+                <div class="card">
+                    <div class="card-title">
+                        <h5>Name: {{ user['name'] }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Contact: {{ user['email'] }}</p>
+                        <a href="/resolve/found/{{ item['_id'] }}" class="btn btn-primary">Resolve</a>
+                    </div>
+                </div>
                 {% endfor %}
             </div>
             </div>

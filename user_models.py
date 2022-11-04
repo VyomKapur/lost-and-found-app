@@ -52,8 +52,8 @@ class User:
         return redirect('/')
     
     def me(self):
-        items_lost = self.db.lost.find({'created_by': session['user']['_id'], 'claimed_by': []})
-        items_found = self.db.found.find({'created_by': session['user']['_id'], 'claimed_by': []})
-        items_lost_claimed = self.db.lost.find({'created_by': session['user']['_id'], 'claimed_by': {'$ne': []}})
-        items_found_claimed = self.db.found.find({'created_by': session['user']['_id'], 'claimed_by': {'$ne': []}})
+        items_lost = self.db.lost.find({'created_by': session['user']['_id'], "resolved":False, 'claimed_by': []})
+        items_found = self.db.found.find({'created_by': session['user']['_id'], "resolved": False, 'claimed_by': []})
+        items_lost_claimed = self.db.lost.find({'created_by': session['user']['_id'], "resolved": False, 'claimed_by': {'$ne': []}})
+        items_found_claimed = self.db.found.find({'created_by': session['user']['_id'], "resolved":False, 'claimed_by': {'$ne': []}})
         return items_lost, items_found, items_lost_claimed, items_found_claimed

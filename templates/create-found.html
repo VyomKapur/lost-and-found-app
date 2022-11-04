@@ -2,18 +2,22 @@
 
 {% block title %} Item Found {% endblock %}
 {% block content %}
-<form action="/submit/found" method="POST" enctype="multipart/form-data" onsubmit="return(validateForm());">
-    <label for="item-found">Enter name of item found</label>
-    <input type="text" name="item-name" id="name"> <br>
-    <label for="description-found">Enter description of item found</label>
-    <textarea name="description-found" cols="30" rows="10" id="desc"></textarea><br>
-    <label for="location-found">Enter location of item found</label>
-    <input type="text" name="location" id="location"> <br>
-    <label for="image-found">Upload picture</label>
-    <input type="file" name="image-found"> <br>
-    <p id="error"></p>
-    <button>Submit Found Request</button>
-</form>
+<div class="container">
+    <form action="/submit/found" method="POST" enctype="multipart/form-data" onsubmit="return(validateForm());">
+    <div class="row center align-items-center m-2">
+        <label for="item-found">Enter name of item found</label>
+        <input type="text" name="item-name" id="name"> <br>
+        <label for="description-found">Enter description of item found</label>
+        <textarea name="description-found" cols="30" rows="10" id="desc"></textarea><br>
+        <label for="location-found">Enter location of item found</label>
+        <input type="text" name="location" id="location"> <br>
+        <label for="image-found">Upload picture</label>
+        <input type="file" name="image-found"> <br>
+        <p id="error"></p>
+        <button>Submit Found Request</button>
+    </div>
+    </form>
+</div>
 
 <script>
     p = document.getElementById('error')
