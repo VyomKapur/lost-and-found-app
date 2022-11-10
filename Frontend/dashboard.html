@@ -1,0 +1,62 @@
+<!-- {% extends "base.html" %} -->
+
+<!-- {% block title %}  -->
+<body>
+<h1>Dashboard </h1>
+<!-- {% endblock %} -->
+
+<!-- {% block content %}  -->
+
+<h1>Welcome 
+    <!-- {{ session['user']['name'] }}! -->
+</h1>
+<!-- {% if items_lost|length == 0: %} -->
+<link rel="stylesheet" href="dashboard1.css">    
+
+<h2>No lost items requests posted</h2>
+<!-- {% else: %}
+{% for item in items_lost: %} -->
+<div class="container"> 
+<div class="card" style="width: 18rem;">
+<img src="" class="card-img-top" alt="...">
+<div class="card-body">
+    <h5 class="card-title">
+        <!-- {{ item['name'] }} -->
+    </h5>
+    <p class="card-text">
+        <!-- {{ item['description'] }}  -->
+        <br> 
+        Status: 
+        <!-- {{ item['resolved'] }} -->
+    </p>
+</div>
+</div>
+</div>
+
+<!-- {% endfor %}
+{% endif %}
+{% if items_found|length == 0: %} -->
+<h2>No found item requests posted</h2>
+<!-- {% else: %}
+{% for item in items_found: %} -->
+<div class="container"> 
+<div class="card" style="width: 18rem;">
+<img src="" class="card-img-top" alt="...">
+<div class="card-body">
+    <h5 class="card-title">
+        <!-- {{ item['name'] }} -->
+    </h5>
+    <p class="card-text">
+        <!-- {{ item['description'] }}  -->
+        <br> Status: 
+        <!-- {{ item['resolved'] }} -->
+    </p>
+</div>
+</div>
+</div>
+
+
+</body>
+<!-- {% endfor %} -->
+<!-- {% endif %} -->
+<!-- {% endblock %} -->
