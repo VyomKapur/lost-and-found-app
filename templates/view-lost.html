@@ -3,12 +3,13 @@
 {% block title %} View Lost Items {% endblock %}
 
 {% block content %}
+<div class="show">
 {% if items|length == 0: %}
 <h4>No lost items request yet</h4>
 {% else: %}
 {% for item in items: %}
 {% if session['user']['_id'] not in item['claimed_by']: %}
-<div class="card" style="width: 18rem;">
+<div class="card m-3" style="width: 18rem;">
 <img src="../static/images/img.jpg" class="card-img-top" alt="...">
 <div class="card-body">
     <h5 class="card-title">{{ item['name'] }}</h5>
@@ -23,6 +24,7 @@
 <div class="card-body">
     <h5 class="card-title">{{ item['name'] }}</h5>
     <p class="card-text">{{ item['description'] }}</p>
+</div>
 </div>
 </div>
 {% endif %}

@@ -4,6 +4,7 @@
 
 {% block content %}
 {% if items|length == 0: %}
+<div class="show">
 <h4>No found items request yet</h4>
 {% else: %}
 {% for item in items: %}
@@ -19,13 +20,16 @@
 </div>
 {% else: %}
 <div class="card" style="width: 18rem;">
-    <img src="../static/images/img.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">{{ item['name'] }}</h5>
-        <p class="card-text">{{ item['description'] }}</p>
-        <a href="/view/found/claim/{{ item['_id'] }}" class="btn btn-primary {{ 'disabled' if item['created_by'] == session['user']['_id'] }}">Claim</a>
-    </div>
-    </div>
+<img src="../static/images/img.jpg" class="card-img-top" alt="...">
+<div class="card-body">
+    <h5 class="card-title">{{ item['name'] }}</h5>
+    <p class="card-text">{{ item['description'] }}</p>
+    <a href="/view/found/claim/{{ item['_id'] }}" class="btn btn-primary {{ 'disabled' if item['created_by'] == session['user']['_id'] }}">Claim</a>
+</div>
+</div>
+
+</div>
+
 {% endif %}
 {% endif %}
 {% endfor %}
