@@ -15,7 +15,7 @@
             {% else: %}
             {% for item in items_lost: %}
             <div class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="...">
+            <img src="../static/images/img.jpg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ item['name'] }}</h5>
                 <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
@@ -33,7 +33,7 @@
             {% else: %}
             {% for item in items_found: %}
             <div class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="...">
+            <img src="../static/images/img.jpg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ item['name'] }}</h5>
                 <p class="card-text">{{ item['description'] }} <br> Status: {{ item['resolved'] }}</p>
@@ -53,18 +53,14 @@
                 {% set item = claim[0] %}
                 {% set users = claim[1] %}
             <div class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="...">
+            <img src="../static/images/img.jpg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ item['name'] }}</h5>
                 <p class="card-text">{{ item['description'] }}</p>
                 {% for user in users: %}
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Name: {{ user['name'] }}</h5>
-                    <p>Contact: {{ user['email'] }}</p>
-                    <a href="/resolve/lost/{{ item['_id'] }}" class="btn btn-primary">Resolve</a>  
-                </div>     
-                </div>         
+                Name: {{ user['name'] }}
+                Contact: {{ user['email'] }}
+                <a href="/resolve/lost/{{ item['_id'] }}" class="btn btn-primary">Resolve</a>          
                 {% endfor %}
             </div>
             </div>
@@ -81,20 +77,14 @@
                 {% set item = claim[0] %}
                 {% set users = claim[1] %}
             <div class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="...">
+            <img src="../static/images/img.jpg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ item['name'] }}</h5>
                 <p class="card-text">{{ item['description'] }}</p>
                 {% for user in users: %}
-                <div class="card">
-                    <div class="card-title">
-                        <h5>Name: {{ user['name'] }}</h5>
-                    </div>
-                    <div class="card-body">
-                        <p>Contact: {{ user['email'] }}</p>
-                        <a href="/resolve/found/{{ item['_id'] }}" class="btn btn-primary">Resolve</a>
-                    </div>
-                </div>
+                <h5>Name: {{ user['name'] }}</h5>
+                <p>Contact: {{ user['email'] }}</p>
+                <a href="/resolve/found/{{ item['_id'] }}" class="btn btn-primary">Resolve</a>
                 {% endfor %}
             </div>
             </div>

@@ -9,7 +9,7 @@
 {% for item in items: %}
 {% if session['user']['_id'] not in item['claimed_by']: %}
 <div class="card" style="width: 18rem;">
-<img src="..." class="card-img-top" alt="...">
+<img src="../static/images/img.jpg" class="card-img-top" alt="...">
 <div class="card-body">
     <h5 class="card-title">{{ item['name'] }}</h5>
     <p class="card-text">{{ item['description'] }}</p>
@@ -19,7 +19,7 @@
 {% else: %}
 <h3>Claimed Items: </h3>
 <div class="card" style="width: 18rem;">
-<img src="" class="card-img-top" alt="...">
+<img src="../static/images/img.jpg" class="card-img-top" alt="...">
 <div class="card-body">
     <h5 class="card-title">{{ item['name'] }}</h5>
     <p class="card-text">{{ item['description'] }}</p>

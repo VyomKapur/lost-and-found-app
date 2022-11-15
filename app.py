@@ -73,13 +73,14 @@ def dashboard():
     claimed_found = []
     for item in items_lost_claimed:
         for id in item['claimed_by']:
-            users_lost = db.users.find({'_id': id, "resolved": False})
+            users_lost = db.users.find({'_id': id})
             claimed_lost.append((item,list(users_lost)))
+            
     for item in items_found_claimed:
         for id in item['claimed_by']:
-            users_found = db.users.find({'_id': id, "resolved":False})
+            users_found = db.users.find({'_id': id})
             claimed_found.append((item,list(users_found)))
-    
+            
     return render_template('dashboard.html', user=user, items_lost=list(items_lost), items_found=list(items_found), claimed_lost=claimed_lost, claimed_found=claimed_found)
 
 @app.route('/delete/lost/<string:id>', methods=['GET', 'POST'])

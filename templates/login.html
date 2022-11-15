@@ -1,7 +1,4 @@
 {% extends "base.html" %}
-{% block link %}
-<script src="/static/js/script.js"></script>
-{% endblock %}
 {% block content %}
 <div class="container">
     <form action="/submit/login" method="POST" name="login-form" onsubmit = "return(validate());">
