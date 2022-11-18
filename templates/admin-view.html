@@ -1,21 +1,50 @@
 {% extends "base.html" %}
 
+{% block link %}
+<link rel="stylesheet" href="../static/css/admin-views.css">
+{% endblock %}
 {% block title %}Admin Control{% endblock %}
 
 {% block content %}
 <div class="body">
+    <h1>Registered Users</h1>
     <div class="container">
         {% for user in users: %}
-        <a href="/admin/user/delete/{{ user['_id'] }}" method="POST">{{ user['name'] }}</a>
-
+        <div class="card" style="width: 18rem;">
+        <img src="../static/images/user.png" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ user['name'] }}</h5>
+            <p class="card-text">{{ user['email'] }}</p>
+            <a class="btn btn-primary" href="/admin/user/delete/{{ user['_id'] }}" method="POST">Delete</a>
+        </div>
+        </div>
         {% endfor %}
-
+    </div>
+    
+    <h1>Items Found</h1>
+    <div class="container">
         {% for item in items_found: %}
-        <a href="/admin/found/delete/{{ item['_id'] }}" method="POST">{{ item['_id'] }}</a>
+        <div class="card" style="width: 18rem;">
+        <img src="../static/images/user.png" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ item['name'] }}</h5>
+            <p class="card-text">{{ item['description'] }}</p>
+            <a class="btn btn-primary" href="/admin/found/delete/{{ item['_id'] }}" method="POST">Delete</a>
+        </div>
+        </div>
         {% endfor %}
-
+    </div>
+    <h1>Items Lost</h1>
+    <div class="container">
         {% for item in items_lost: %}
-        <a href="/admin/lost/delete/{{ item['_id'] }}" method="POST">{{ item['_id'] }}</a>
+        <div class="card" style="width: 18rem;">
+        <img src="../static/images/user.png" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ item['name'] }}</h5>
+            <p class="card-text">{{ item['description'] }}</p>
+            <a class="btn btn-primary" href="/admin/lost/delete/{{ item['_id'] }}" method="POST">Delete</a>
+        </div>
+        </div>
         {% endfor %}
     </div>
 </div>
