@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %} View Lost Items {% endblock %}
-
+{% block link %}
+<link rel="stylesheet" href="../static/css/about.css">
+{% endblock %}
 {% block content %}
+<div class="body">
 <div class="show">
 {% if items|length == 0: %}
 <h4>No lost items request yet</h4>
@@ -24,6 +27,7 @@
 <div class="card-body">
     <h5 class="card-title">{{ item['name'] }}</h5>
     <p class="card-text">{{ item['description'] }}</p>
+</div>
 </div>
 </div>
 </div>

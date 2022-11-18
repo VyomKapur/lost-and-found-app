@@ -1,10 +1,16 @@
 {% extends "base.html" %}
+
+{% block link %}
+<link rel="stylesheet" href="../static/css/style.css">
+{% endblock %}
 {% block content %}
+<div class="body">
+    <h1>Enter your Details</h1>
 <div class="container">
     <form action="/submit/login" method="POST" name="login-form" onsubmit = "return(validate());">
     <div class="row center align-items-center margin-2">
         <label for="username">Enter your Username: </label>
-        <input type="text" name="username" id="user"> <br>
+        <input type="text" name="username" id="user" size="20"> <br>
         <label for="email">Enter your Email: </label>
         <input type="text" name="email" id="email"> <br>
         <label for="username">Enter your Password: </label>
@@ -14,7 +20,7 @@
     </div>
     </form>
 </div>
-
+</div>
 <script>
     p = document.getElementById('error')
     p.innerHTML = ""

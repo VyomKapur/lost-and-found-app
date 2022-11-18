@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
+{% block link %} 
+<link rel="stylesheet" href="../static/css/dashboard.css">
+{% endblock %}
+
 {% block title %} Dashboard {% endblock %}
 
 {% block content %} 
-
-<h1 class="text-center m-3">Welcome {{ session['user']['name'] }}!</h1>
+<div class="body">
+<h1 class="text-center">Welcome {{ session['user']['name'] }}!</h1>
 
 <div class="container dashboard">
     <div class="row">
@@ -92,5 +96,6 @@
             {% endif %}
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

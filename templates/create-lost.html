@@ -1,7 +1,10 @@
 {% extends "base.html" %}
-
+{% block link %}
+<link rel="stylesheet" href="../static/css/lost-found.css">
+{% endblock %}
 {% block title %} Item Lost {% endblock %}
 {% block content %}
+<div class="body">
 <div class="container">
     <form action="/submit/lost" method="POST" enctype="multipart/form-data" onsubmit = "return(validateForm());">
     <div class="row center align-items-center m-2">
@@ -17,6 +20,7 @@
         <button type="Submit">Submit Lost Request</button>
     </div>
     </form>
+</div>
 </div>
 
 <script>

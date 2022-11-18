@@ -1,17 +1,22 @@
 {% extends "base.html" %}
 
 {% block title %}Admin Control{% endblock %}
+
 {% block content %}
-{% for user in users: %}
-<a href="/admin/user/delete/{{ user['_id'] }}" method="POST">{{ user['name'] }}</a>
+<div class="body">
+    <div class="container">
+        {% for user in users: %}
+        <a href="/admin/user/delete/{{ user['_id'] }}" method="POST">{{ user['name'] }}</a>
 
-{% endfor %}
+        {% endfor %}
 
-{% for item in items_found: %}
-<a href="/admin/found/delete/{{ item['_id'] }}" method="POST">{{ item['_id'] }}</a>
-{% endfor %}
+        {% for item in items_found: %}
+        <a href="/admin/found/delete/{{ item['_id'] }}" method="POST">{{ item['_id'] }}</a>
+        {% endfor %}
 
-{% for item in items_lost: %}
-<a href="/admin/lost/delete/{{ item['_id'] }}" method="POST">{{ item['_id'] }}</a>
-{% endfor %}
+        {% for item in items_lost: %}
+        <a href="/admin/lost/delete/{{ item['_id'] }}" method="POST">{{ item['_id'] }}</a>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
